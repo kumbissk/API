@@ -19,7 +19,8 @@ class Commande extends Model
         'Description',
         'uploadPhoto',
         'residenceAdresse',
-        'personne_id',
+        'envoyeur_id',
+        'livreur_id',
     ];
 
     public function personne()

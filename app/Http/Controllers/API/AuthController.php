@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Personne;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PersonneController;
+use App\Models\Commande;
 
 class AuthController extends Controller
 {
@@ -16,7 +18,12 @@ class AuthController extends Controller
      */
     public function index()
     {
-        //
+        return User::all();
+    }
+
+    public function findOneUser($id)
+    {
+        return User::find($id);
     }
 
     /**
@@ -69,10 +76,28 @@ class AuthController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request,  User $user, Personne $personne)
     {
-        //
+        User::find($user->id)->update([
+            'email' => $request->email,
+            'password' => $request->password,
+            'dateOuverture' => $request->dateOuverture,
+            'roleCompte' => $request->roleCompte,
+            'personne_id' => Personne::latest()->first()->id,
+        ]);
+        Personne::find($personne->id)->update([
+            'civilite' => $request->civilite,
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+            'telephone' => $request->telephone,
+            'adress' => $request->adress,
+            'disponibilite' => $request->disponibilite,
+        ]);
+        
+
+       
     }
+   
 
     /**
      * Remove the specified resource from storage.
@@ -82,12 +107,15 @@ class AuthController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+       
     }
+
+
  
 
     public function register(Request $request)
     {
+        // $personne = PersonneController->store($request);
         $personne = Personne::create([
             'civilite' => $request->civilite,
             'nom' => $request->nom,
@@ -96,14 +124,25 @@ class AuthController extends Controller
             'adress' => $request->adress,
             'disponibilite' => $request->disponibilite,
         ]);
-        // dd($request->dateOuverture);
+
 
         $user = User::create([
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'dateOuverture' => $request->dateOuverture,
+            'roleCompte' => $request->roleCompte,
             'personne_id' => Personne::latest()->first()->id,
+
         ]);
+
+        // $user = User::update([
+        //     'email' => $request->email,
+        //     'password' => bcrypt($request->password),
+        //     'dateOuverture' => $request->dateOuverture,
+        //     'roleCompte' => $request->roleCompte,
+        //     'personne_id' => Personne::latest()->first()->id,
+        // ])
+
 
         // $token = $user->createToken('MyApp')->accessToken;
 
@@ -112,6 +151,8 @@ class AuthController extends Controller
         //     'user' => $user
         // ], 201);
     }
+
+
 
     public function login(Request $request)
     {

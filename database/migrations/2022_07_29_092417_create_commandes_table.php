@@ -24,10 +24,14 @@ return new class extends Migration
             $table->string('Description');
             $table->string('uploadPhoto');
             $table->string('residenceAdresse');
-            $table->foreignId('personne_id')
-            ->constrained()
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
+            // $table->foreignId('personne_id')
+            // ->constrained()
+            // ->onDelete('cascade')
+            // ->onUpdate('cascade');
+            $table->unsignedBigInteger('envoyeur_id');
+            $table->foreign('envoyeur_id')->references('id')->on('users');
+            $table->unsignedBigInteger('livreur_id');
+            $table->foreign('livreur_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

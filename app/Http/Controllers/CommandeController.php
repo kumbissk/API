@@ -35,6 +35,19 @@ class CommandeController extends Controller
     public function store(Request $request)
     {
         //
+        // $commande = Commande::create([
+        //     'numero' => $request->numero,
+        //     'nombreColis' => $request->NombreColis,
+        //     'poids' => $request->Poids,
+        //     'dateEnregistrement' => $request->dateEnregistrement,
+        //     'lieuDepart' => $request->lieuDepart,
+        //     'lieuDestination' => $request->lieuDestination,
+        //     'Description' => $request->Description,
+        //     'uploadPhoto' => $request->uploadPhoto,
+        //     'residenceAdresse' => $request->residenceAdresse,
+        //     'personne_id' => $personne->id,
+        // ]);
+        // dd($request->dateOuverture);
     }
 
     /**
