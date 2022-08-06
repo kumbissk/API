@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PersonneController;
 use App\Models\Commande;
+use Termwind\Components\Dd;
 
 class AuthController extends Controller
 {
@@ -76,16 +77,16 @@ class AuthController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  User $user, Personne $personne)
+    public function update(Request $request)
     {
-        User::find($user->id)->update([
+        $user = User::findOrFail($request->id);
+        $user->update([
             'email' => $request->email,
             'password' => $request->password,
-            'dateOuverture' => $request->dateOuverture,
-            'roleCompte' => $request->roleCompte,
-            'personne_id' => Personne::latest()->first()->id,
         ]);
-        Personne::find($personne->id)->update([
+        $personne_to_update = Personne::where('id',$user->personne_id)->get()->first();
+
+        $personne_to_update->update([
             'civilite' => $request->civilite,
             'nom' => $request->nom,
             'prenom' => $request->prenom,
@@ -94,8 +95,6 @@ class AuthController extends Controller
             'disponibilite' => $request->disponibilite,
         ]);
         
-
-       
     }
    
 
@@ -105,10 +104,40 @@ class AuthController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Request $request)
     {
        
+       $user = User::findOrFail($request->id);
+       $user->delete([
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+        $personne_to_delete = Personne::where('id',$user->personne_id)->get()->first();
+        $personne_to_delete->delete([
+            'civilite' => $request->civilite,
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+            'telephone' => $request->telephone,
+            'adress' => $request->adress,
+            'disponibilite' => $request->disponibilite,
+        ]);
+
+        $personne = Personne::find($request->id);
+        if ($personne) {
+            $personne->delete();
+            return response()->json([
+                'success' => 'Personne supprimée avec success',
+            ], 200);
+        }
+
+
     }
+
+    // public function search($roleCompte)
+    // {
+    //     return User::where('roleCompte', $roleCompte)->get();
+    // }
+   
 
 
  
@@ -116,12 +145,24 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         // $personne = PersonneController->store($request);
+        $request->validate([
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+            'civilite' => 'required|string',
+            'nom' => 'required|string',
+            'prenom' => 'required|string',
+            'telephone' => 'required|string',
+            'adresse' => 'required|string',
+            'disponibilite' => 'required|string',   
+            'dateOuverture'=> 'required|string',
+            'roleCompte' => 'required|string',
+        ]);
         $personne = Personne::create([
             'civilite' => $request->civilite,
             'nom' => $request->nom,
             'prenom' => $request->prenom,
             'telephone' => $request->telephone,
-            'adress' => $request->adress,
+            'adresse' => $request->adress,
             'disponibilite' => $request->disponibilite,
         ]);
 
@@ -134,22 +175,6 @@ class AuthController extends Controller
             'personne_id' => Personne::latest()->first()->id,
 
         ]);
-
-        // $user = User::update([
-        //     'email' => $request->email,
-        //     'password' => bcrypt($request->password),
-        //     'dateOuverture' => $request->dateOuverture,
-        //     'roleCompte' => $request->roleCompte,
-        //     'personne_id' => Personne::latest()->first()->id,
-        // ])
-
-
-        // $token = $user->createToken('MyApp')->accessToken;
-
-        // return response()->json([
-        //     'token' => $token,
-        //     'user' => $user
-        // ], 201);
     }
 
 

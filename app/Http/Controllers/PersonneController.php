@@ -14,7 +14,7 @@ class PersonneController extends Controller
      */
     public function index()
     {
-        return Personne::all();
+        return  Personne::all();
     }
 
     /**
@@ -53,6 +53,11 @@ class PersonneController extends Controller
     public function show($id)
     {
         return Personne::find($id);
+    }
+
+    public function allPersonne()
+    {
+        return Personne::all();
     }
 
     /**
@@ -101,12 +106,12 @@ class PersonneController extends Controller
     public function destroy($id)
     {
         //
-        // $personne = Personne::find($id);
-        // if ($personne) {
-        //     $personne->delete();
-        //     return response()->json([
-        //         'success' => 'Personne supprimée avec success',
-        //     ], 200);
-        // }
+        $personne = Personne::find($id);
+        if ($personne) {
+            $personne->delete();
+            return response()->json([
+                'success' => 'Personne supprimée avec success',
+            ], 200);
+        }
     }
 }
