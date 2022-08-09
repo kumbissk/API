@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commande;
 use Illuminate\Http\Request;
 
 class CommandeController extends Controller
@@ -14,6 +15,7 @@ class CommandeController extends Controller
     public function index()
     {
         //
+        return Commande::all();
     }
 
     /**
@@ -35,18 +37,25 @@ class CommandeController extends Controller
     public function store(Request $request)
     {
         //
-        // $commande = Commande::create([
-        //     'numero' => $request->numero,
-        //     'nombreColis' => $request->NombreColis,
-        //     'poids' => $request->Poids,
-        //     'dateEnregistrement' => $request->dateEnregistrement,
-        //     'lieuDepart' => $request->lieuDepart,
-        //     'lieuDestination' => $request->lieuDestination,
-        //     'Description' => $request->Description,
-        //     'uploadPhoto' => $request->uploadPhoto,
-        //     'residenceAdresse' => $request->residenceAdresse,
-        //     'personne_id' => $personne->id,
-        // ]);
+        $commande = Commande::create([
+            'numero' => $request->numero,
+            'nombreColis' => $request->NombreColis,
+            'poids' => $request->Poids,
+            'dateEnregistrement' => $request->dateEnregistrement,
+            'lieuDepart' => $request->lieuDepart,
+            'lieuDestination' => $request->lieuDestination,
+            'Description' => $request->Description,
+            'uploadPhoto' => $request->uploadPhoto,
+            'residenceAdresse' => $request->residenceAdresse,
+            'personne_id' => $request->personne_id,
+            
+            // 'personne_id' => $personne->id,
+            
+            // 'envoyeur_id' => $request->envoyeur_id,
+            // 'livreur_id' => $request->livreur_id,
+
+            
+        ]);
         // dd($request->dateOuverture);
     }
 
@@ -59,6 +68,12 @@ class CommandeController extends Controller
     public function show($id)
     {
         //
+        return Commande::find($id);
+    }
+
+    public function allCommande()
+    {
+        return Commande::all();
     }
 
     /**
@@ -82,6 +97,25 @@ class CommandeController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $commande = Commande::find($id);
+        if ($commande) {
+            $commande->update([
+                'numero' => $request->numero,
+                'nombreColis' => $request->NombreColis,
+                'poids' => $request->Poids,
+                'dateEnregistrement' => $request->dateEnregistrement,
+                'lieuDepart' => $request->lieuDepart,
+                'lieuDestination' => $request->lieuDestination,
+                'Description' => $request->Description,
+                'uploadPhoto' => $request->uploadPhoto,
+                'residenceAdresse' => $request->residenceAdresse,
+                'personne_id' => $request->personne_id,
+                
+            ]);
+            return response()->json([
+                'success' => 'Commande modifiée avec success',
+            ], 200);
+        }
     }
 
     /**
@@ -93,5 +127,12 @@ class CommandeController extends Controller
     public function destroy($id)
     {
         //
+        $commande = Commande::find($id);
+        if ($commande) {
+            $commande->delete();
+            return response()->json([
+                'success' => 'Commande supprimée avec success',
+            ], 200);
+        }
     }
 }

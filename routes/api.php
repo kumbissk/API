@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Http\Request;
+use Faker\Provider\ar_EG\Person;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\PersonneController;
-use Faker\Provider\ar_EG\Person;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,18 @@ Route::get('personnes/{id}', [PersonneController::class, 'show'])->name('show.ap
 Route::delete('personnes/{id}', [PersonneController::class, 'destroy'])->name('destroy.api');
 
 Route::delete('listeUtilisateurs/{id}', [AuthController::class, 'destroy'])->name('destroy.api');
+
+Route::post('commandes', [CommandeController::class, 'store'])->name('store.api');
+
+Route::get('commandes', [CommandeController::class, 'allCommande'])->name('allCommande.api');
+
+Route::get('commandes/{id}', [CommandeController::class, 'show'])->name('show.api');
+
+Route::delete('commandes/{id}', [CommandeController::class, 'destroy'])->name('destroy.api');
+
+Route::put('commandes/{id}', [CommandeController::class, 'update'])->name('update.api');
+
+
 
 Route::middleware('auth:api')->group(function(){
     Route::get('get-user', [AuthController::class, 'userInfo'])->name('get-user.api');
