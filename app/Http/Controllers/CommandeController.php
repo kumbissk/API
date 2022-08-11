@@ -39,24 +39,18 @@ class CommandeController extends Controller
         //
         $commande = Commande::create([
             'numero' => $request->numero,
-            'nombreColis' => $request->NombreColis,
-            'poids' => $request->Poids,
+            'nombreColis' => $request->nombreColis,
+            'poids' => $request->poids,
             'dateEnregistrement' => $request->dateEnregistrement,
             'lieuDepart' => $request->lieuDepart,
             'lieuDestination' => $request->lieuDestination,
             'Description' => $request->Description,
             'uploadPhoto' => $request->uploadPhoto,
             'residenceAdresse' => $request->residenceAdresse,
-            'personne_id' => $request->personne_id,
-            
-            // 'personne_id' => $personne->id,
-            
-            // 'envoyeur_id' => $request->envoyeur_id,
-            // 'livreur_id' => $request->livreur_id,
-
-            
+            'envoyeur_id' => $request->envoyeur_id,
+            'livreur_id' => $request->livreur_id,
         ]);
-        // dd($request->dateOuverture);
+        return $commande;
     }
 
     /**
@@ -101,15 +95,17 @@ class CommandeController extends Controller
         if ($commande) {
             $commande->update([
                 'numero' => $request->numero,
-                'nombreColis' => $request->NombreColis,
-                'poids' => $request->Poids,
+                'nombreColis' => $request->nombreColis,
+                'poids' => $request->poids,
                 'dateEnregistrement' => $request->dateEnregistrement,
                 'lieuDepart' => $request->lieuDepart,
                 'lieuDestination' => $request->lieuDestination,
                 'Description' => $request->Description,
                 'uploadPhoto' => $request->uploadPhoto,
                 'residenceAdresse' => $request->residenceAdresse,
-                'personne_id' => $request->personne_id,
+                'envoyeur_id' => 1,
+                'livreur_id' => 1,
+                // 'personne_id' => $request->personne_id,
                 
             ]);
             return response()->json([

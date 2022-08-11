@@ -144,7 +144,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // $personne = PersonneController->store($request);
         $request->validate([
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
@@ -175,6 +174,13 @@ class AuthController extends Controller
             'personne_id' => Personne::latest()->first()->id,
 
         ]);
+        return response()->json([
+            'success' => 'User créé avec success',
+        ], 200);
+
+        $user = new User();
+        $token = $user->createToken('MyApp')->accessToken;
+        return response()->json(['token' => $token, 'user' => $user], 200);
     }
 
 
@@ -186,14 +192,11 @@ class AuthController extends Controller
         $data = [
             'email' => $request->email,
             'password' => $request->password,
-            'dateOuverture' => $request->dateOuverture,
-            'token'=>$token,
         ];
 
         if (auth()->attempt($data)) {
             $user = User::user();
             $token = $user->createToken('myToken')->accessToken;
-            // $token = auth()->user()->createToken('MyApp')->accessToken;
             return response()->json(['token'=>$token], 200);
         }else{
             return response()->json(['error'=>'unauthorized'], 401);
@@ -203,6 +206,6 @@ class AuthController extends Controller
     public function userInfo()
     {
         $user = auth()->user();
-        return response()->json(['user'=>$user], 200);
+        return response()->json(['email'=> $user->email, 'password'=> $user->password], 200);
     }
 }
