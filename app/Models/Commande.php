@@ -9,19 +9,7 @@ class Commande extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'numero',
-        'nombreColis',
-        'poids',
-        'dateEnregistrement',
-        'lieuDepart',
-        'lieuDestination',
-        'Description',
-        'uploadPhoto',
-        'residenceAdresse',
-        'envoyeur_id',
-        'livreur_id',
-    ];
+    protected $guarded = ["id"];
 
     public function personne()
     {

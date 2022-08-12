@@ -9,14 +9,7 @@ class Personne extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'civilite',
-        'nom',
-        'prenom',
-        'telephone',
-        'adresse',
-        'disponibilite',
-    ];
+    protected $guarded = ["id"];
 
     /**
      * Get all of the comments for the pays.

@@ -167,7 +167,7 @@ class AuthController extends Controller
             'nom' => $request->nom,
             'prenom' => $request->prenom,
             'telephone' => $request->telephone,
-            'adresse' => $request->adress,
+            'adresse' => $request->adresse,
             'disponibilite' => $request->disponibilite,
         ]);
 
