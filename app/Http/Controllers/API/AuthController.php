@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\User;
+use App\Models\Commande;
 use App\Models\Personne;
+use Termwind\Components\Dd;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PersonneController;
-use App\Models\Commande;
-use Termwind\Components\Dd;
 
 class AuthController extends Controller
 {
@@ -25,6 +26,11 @@ class AuthController extends Controller
     public function findOneUser($id)
     {
         return User::find($id);
+    }
+
+    public function findRole($id)
+    {
+        // return User::find($id)->roleCompte->livreur;
     }
 
     /**
@@ -187,15 +193,21 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $user = new User();
-        $token = $user->createToken('MyApp')->accessToken;
+        // $user = new User();
+        // $token = $user->createToken('MyApp')->accessToken;
         $data = [
             'email' => $request->email,
             'password' => $request->password,
         ];
 
         if (auth()->attempt($data)) {
-            $user = User::user();
+            
+            /**
+             * @var \App\Models\User $user
+             * 
+             * **/
+            $user = auth::user();
+
             $token = $user->createToken('myToken')->accessToken;
             return response()->json(['token'=>$token], 200);
         }else{

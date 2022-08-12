@@ -103,8 +103,8 @@ class CommandeController extends Controller
                 'Description' => $request->Description,
                 'uploadPhoto' => $request->uploadPhoto,
                 'residenceAdresse' => $request->residenceAdresse,
-                'envoyeur_id' => 1,
-                'livreur_id' => 1,
+                'envoyeur_id' => $request->envoyeur_id,
+                'livreur_id' => $request->livreur_id,
                 // 'personne_id' => $request->personne_id,
                 
             ]);
