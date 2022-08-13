@@ -37,10 +37,8 @@ class CommandeController extends Controller
      */
     
     public function store(Request $request)
-    {   $file= $request->file('uploadPhoto');
-        $filename= date('YmdHi').$file;
-        $file-> move(public_path('public/Image'), $filename);
-        //
+    {   
+        
         $commande = Commande::create([
             'numero' => $request->numero,
             'nombreColis' => $request->nombreColis,
@@ -49,10 +47,11 @@ class CommandeController extends Controller
             'lieuDepart' => $request->lieuDepart,
             'lieuDestination' => $request->lieuDestination,
             'Description' => $request->Description,
-            'uploadPhoto' => $filename,
             'residenceAdresse' => $request->residenceAdresse,
-            'envoyeur_id' => $request->envoyeur_id,
-            'livreur_id' => $request->livreur_id,
+            'envoyeur_id' => 1,
+            'livreur_id' => 1,
+            // 'envoyeur_id' => $request->envoyeur_id,
+            // 'livreur_id' => $request->livreur_id,
         ]);
         return $commande;
     }
@@ -65,7 +64,6 @@ class CommandeController extends Controller
      */
     public function show($id)
     {
-        //
         return Commande::find($id);
     }
 
@@ -105,12 +103,9 @@ class CommandeController extends Controller
                 'lieuDepart' => $request->lieuDepart,
                 'lieuDestination' => $request->lieuDestination,
                 'Description' => $request->Description,
-                'uploadPhoto' => $request->uploadPhoto,
                 'residenceAdresse' => $request->residenceAdresse,
                 'envoyeur_id' => $request->envoyeur_id,
                 'livreur_id' => $request->livreur_id,
-                // 'personne_id' => $request->personne_id,
-                
             ]);
             return response()->json([
                 'success' => 'Commande modifiée avec success',

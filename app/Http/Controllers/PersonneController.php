@@ -35,14 +35,7 @@ class PersonneController extends Controller
      */
     public function store(Request $request)
     {
-        // Personne::create([
-        //     'civilite' => $request->civilite,
-        //     'nom' => $request->nom,
-        //     'prenom' => $request->prenom,
-        //     'telephone' => $request->telephone,
-        //     'adress' => $request->adress,
-        //     'disponibilite' => $request->disponibilite,
-        // ]);
+       
     }
 
     /**

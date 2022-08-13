@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\PersonneController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,17 +18,4 @@ Route::get('/', function () {
 });
 
 
-Route::post('register', [AuthController::class, 'register'])->name('register.api');
-Route::post('login', [AuthController::class, 'login'])->name('login.api');
 
-Route::get('listeUtilisateurs', [AuthController::class, 'index'])->name('index.api');
-
-Route::get('listeUtilisateurs/{id}', [AuthController::class, 'findOneUser'])->name('findOneUser.api');
-
-Route::put('listeUtilisateurs/{id}', [AuthController::class, 'update'])->name('update.api');
-
-Route::post('personnes', [PersonneController::class, 'store'])->name('store.api');
-
-Route::get('personnes', [PersonneController::class, 'allPersonne'])->name('allPersonne.api');
-
-Route::get('personnes/{id}', [PersonneController::class, 'show'])->name('show.api');

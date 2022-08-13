@@ -22,12 +22,7 @@ return new class extends Migration
             $table->string('lieuDepart');
             $table->string('lieuDestination');
             $table->string('Description');
-            $table->string('uploadPhoto');
             $table->string('residenceAdresse');
-            // $table->foreignId('personne_id')
-            // ->constrained()
-            // ->onDelete('cascade')
-            // ->onUpdate('cascade');
             $table->unsignedBigInteger('envoyeur_id');
             $table->foreign('envoyeur_id')->references('id')->on('users');
             $table->unsignedBigInteger('livreur_id');

@@ -162,7 +162,7 @@ class AuthController extends Controller
             'dateOuverture'=> 'required|string',
             'roleCompte' => 'required|string',
         ]);
-        $personne = Personne::create([
+        Personne::create([
             'civilite' => $request->civilite,
             'nom' => $request->nom,
             'prenom' => $request->prenom,
