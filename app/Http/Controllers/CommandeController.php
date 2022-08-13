@@ -28,14 +28,18 @@ class CommandeController extends Controller
         //
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function store(Request $request)
-    {
+    {   $file= $request->file('uploadPhoto');
+        $filename= date('YmdHi').$file;
+        $file-> move(public_path('public/Image'), $filename);
         //
         $commande = Commande::create([
             'numero' => $request->numero,
@@ -45,7 +49,7 @@ class CommandeController extends Controller
             'lieuDepart' => $request->lieuDepart,
             'lieuDestination' => $request->lieuDestination,
             'Description' => $request->Description,
-            'uploadPhoto' => $request->uploadPhoto,
+            'uploadPhoto' => $filename,
             'residenceAdresse' => $request->residenceAdresse,
             'envoyeur_id' => $request->envoyeur_id,
             'livreur_id' => $request->livreur_id,

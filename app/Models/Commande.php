@@ -15,4 +15,6 @@ class Commande extends Model
     {
         return $this->belongsTo(Personne::class);
     }
+
+    
 }
