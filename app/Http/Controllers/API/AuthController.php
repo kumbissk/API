@@ -76,6 +76,15 @@ class AuthController extends Controller
         //
     }
 
+    public function listeLivreurs()
+    {
+        $livreurs = User::where('roleCompte', 'livreur')
+            ->join('personnes', 'users.personne_id', '=', 'personnes.id')
+            ->orderBy('users.id')
+            ->get();
+        return $livreurs;
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -193,8 +202,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // $user = new User();
-        // $token = $user->createToken('MyApp')->accessToken;
+       
         $data = [
             'email' => $request->email,
             'password' => $request->password,
@@ -209,7 +217,7 @@ class AuthController extends Controller
             $user = auth::user();
 
             $token = $user->createToken('myToken')->accessToken;
-            return response()->json(['token'=>$token], 200);
+            return response()->json(['token'=>$token, 'roleCompte' => $user -> roleCompte], 200);
         }else{
             return response()->json(['error'=>'unauthorized'], 401);
         }

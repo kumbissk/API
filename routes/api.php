@@ -27,6 +27,8 @@ Route::post('login', [AuthController::class, 'login'])->name('login.api');
 
 // Route::get('/register', [AuthController::class, 'register'])->name('register.api');
 
+Route::get('listeLivreurs', [AuthController::class, 'listeLivreurs'])->name('listeLivreurs.api');
+
 Route::get('listeUtilisateurs', [AuthController::class, 'index'])->name('index.api');
 
 Route::get('listeUtilisateurs/{id}', [AuthController::class, 'findOneUser'])->name('findOneUser.api');
