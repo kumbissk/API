@@ -10,6 +10,6 @@ class ServicesMessagerie extends Controller
 
     public function messaging()
     {
-        // return view('messaging');
+        return view('messaging');
     }
 }
