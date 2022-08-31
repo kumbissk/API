@@ -5,6 +5,7 @@ use Faker\Provider\ar_EG\Person;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\MessagerieServicesController;
 use App\Http\Controllers\PersonneController;
 
 /*
@@ -55,6 +56,7 @@ Route::delete('commandes/{id}', [CommandeController::class, 'destroy'])->name('d
 
 Route::put('commandes/{id}', [CommandeController::class, 'update'])->name('update.api');
 
+Route::post('messaging', [MessagerieServicesController::class, 'messaging'])->name('messaging.api');
 
 
 Route::middleware('auth:api')->group(function(){
