@@ -166,9 +166,7 @@ class AuthController extends Controller
             'nom' => 'required|string',
             'prenom' => 'required|string',
             'telephone' => 'required|string',
-            'adresse' => 'required|string',
             'disponibilite' => 'required|string',   
-            'dateOuverture'=> 'required|string',
             'roleCompte' => 'required|string',
         ]);
         Personne::create([
@@ -176,7 +174,6 @@ class AuthController extends Controller
             'nom' => $request->nom,
             'prenom' => $request->prenom,
             'telephone' => $request->telephone,
-            'adresse' => $request->adresse,
             'disponibilite' => $request->disponibilite,
         ]);
 
@@ -184,7 +181,6 @@ class AuthController extends Controller
         $user = User::create([
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'dateOuverture' => $request->dateOuverture,
             'roleCompte' => $request->roleCompte,
             'personne_id' => Personne::latest()->first()->id,
 
@@ -208,16 +204,18 @@ class AuthController extends Controller
             'password' => $request->password,
         ];
 
+        // return auth()->attempt($data);
+
         if (auth()->attempt($data)) {
             
             /**
              * @var \App\Models\User $user
              * 
-             * **/
+            * **/
             $user = auth::user();
 
             $token = $user->createToken('myToken')->accessToken;
-            return response()->json(['token'=>$token, 'roleCompte' => $user -> roleCompte], 200);
+            return response()->json(['token'=>$token, 'roleCompte' => $user -> roleCompte, 'uid' => $user->id], 200);
         }else{
             return response()->json(['error'=>'unauthorized'], 401);
         }

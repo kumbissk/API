@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commande;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CommandeController extends Controller
@@ -38,22 +39,30 @@ class CommandeController extends Controller
     
     public function store(Request $request)
     {   
+        $request->validate([
+            'nombreColis' => 'required | integer | max:255 | min:1',
+            'poids' => 'required | max:255 | min:1',
+            'lieuDepart' => 'required | string | max:255 | min:3',
+            'lieuDestination' => 'required | string | max:255 | min:1',
+            'Description' => 'required | string',
+            'residenceAdresse' => 'required | string',
+        ]);
+
         
         $commande = Commande::create([
-            'numero' => $request->numero,
+            'numero' => mt_rand(9999, 99999),
             'nombreColis' => $request->nombreColis,
             'poids' => $request->poids,
-            'dateEnregistrement' => $request->dateEnregistrement,
             'lieuDepart' => $request->lieuDepart,
             'lieuDestination' => $request->lieuDestination,
             'Description' => $request->Description,
             'residenceAdresse' => $request->residenceAdresse,
-            'envoyeur_id' => 1,
+            'envoyeur_id' => $request->envoyeur_id,
             'livreur_id' => 1,
-            // 'envoyeur_id' => $request->envoyeur_id,
-            // 'livreur_id' => $request->livreur_id,
         ]);
-        return $commande;
+        return response()->json([
+            'message' => 'Commande enregistrée avec succès',
+        ], 201);
     }
 
     /**
@@ -89,7 +98,7 @@ class CommandeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+    */
     public function update(Request $request, $id)
     {
         //
@@ -113,12 +122,27 @@ class CommandeController extends Controller
         }
     }
 
+    public function commandeClient($id)
+    {
+        $commandes = Commande::where("envoyeur_id", $id)
+                ->orderBy("dateEnregistrement")
+                ->get();
+        return $commandes;
+    }
+
+    public function listeLivraison($id){
+        $commandes = Commande::where("livreur_id", $id)
+                ->orderBy("dateEnregistrement")
+                ->get();
+        return $commandes;
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+    */
     public function destroy($id)
     {
         //

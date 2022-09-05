@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('telephone')->unique()->nullable();
-            $table->string('adresse')->nullable();
+            // $table->string('adresse')->nullable();
             $table->boolean('disponibilite')->default(false);
             $table->timestamps();
         });

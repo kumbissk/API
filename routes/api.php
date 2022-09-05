@@ -50,6 +50,10 @@ Route::post('commandes', [CommandeController::class, 'store'])->name('store.api'
 
 Route::get('commandes', [CommandeController::class, 'allCommande'])->name('allCommande.api');
 
+Route::get('listeCommande/{id}', [CommandeController::class, 'commandeClient'])->name('commandeClient.api');
+
+Route::get('listeLivraison/{id}', [CommandeController::class, 'listeLivraison'])->name('listeLivraison.api');
+
 Route::get('commandes/{id}', [CommandeController::class, 'show'])->name('show.api');
 
 Route::delete('commandes/{id}', [CommandeController::class, 'destroy'])->name('destroy.api');
