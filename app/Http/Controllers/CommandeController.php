@@ -53,6 +53,7 @@ class CommandeController extends Controller
             'numero' => mt_rand(9999, 99999),
             'nombreColis' => $request->nombreColis,
             'poids' => $request->poids,
+            'dateEnregistrement' => Carbon::now(),
             'lieuDepart' => $request->lieuDepart,
             'lieuDestination' => $request->lieuDestination,
             'Description' => $request->Description,
@@ -61,7 +62,7 @@ class CommandeController extends Controller
             'livreur_id' => 1,
         ]);
         return response()->json([
-            'message' => 'Commande enregistrée avec succès',
+            'success' => 'Commande enregistrée avec succès',
         ], 201);
     }
 

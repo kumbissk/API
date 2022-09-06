@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('numero')->unique();
             $table->integer('nombreColis');
             $table->float('poids');
-            // $table->date('dateEnregistrement');
+            $table->date('dateEnregistrement');
             $table->string('lieuDepart');
             $table->string('lieuDestination');
             $table->string('Description');
