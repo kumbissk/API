@@ -17,25 +17,23 @@ class ServicesMessagerieController extends Controller{
     */
     public function index(Request $request)
     {
-        try {
+
   
-            $basic  = new \Vonage\Client\Credentials\Basic(getenv("NEXMO_KEY"), getenv("NEXMO_SECRET"));
+            $basic  = new \Vonage\Client\Credentials\Basic("f4b58ac0", "XwXDPi9H00U6knfD");
             $client = new \Vonage\Client($basic);
   
-            $receiverNumber = "91846XXXXX";
-            $message = "This is testing from ItSolutionStuff.com";
-  
-            $message = $client->message()->send([
-                'to' => $receiverNumber,
-                'from' => 'Vonage APIs',
-                'text' => $message
-            ]);
-  
-            dd('SMS Sent Successfully.');
-              
-        } catch (Exception $e) {
-            dd("Error: ". $e->getMessage());
-        }
+            $response = $client->sms()->send(
+                new \Vonage\SMS\Message\SMS("221784326064", "test msg", 'A text message sent using the Nexmo SMS API')
+            );
+            
+            $message = $response->current();
+            
+            if ($message->getStatus() == 0) {
+                echo "The message was sent successfully\n";
+            } else {
+                echo "The message failed with status: " . $message->getStatus() . "\n";
+            }
+
     }
 
     // public function sendSMS($numero, $message){

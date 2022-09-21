@@ -16,19 +16,23 @@ class MessagerieServicesController extends Controller
     public function messaging(Request $request)
     {
         // return $request->all();
-        try {
+        $message = $request->message;
+        $numero = $request->telephone;
   
-            $basic  = new \Vonage\Client\Credentials\Basic(getenv("NEXMO_KEY"), getenv("NEXMO_SECRET"));
-            $client = new \Vonage\Client($basic);
-  
-            $receiverNumber = "221784326064";
-            $message = $request->message;
-            
-            $message = $client->message()->send([
-                'to' => $receiverNumber,
-                'from' => 'Vonage APIs',
-                'text' => $message
-            ]);
+        $basic  = new \Vonage\Client\Credentials\Basic("f4b58ac0", "XwXDPi9H00U6knfD");
+        $client = new \Vonage\Client($basic);
+
+        $response = $client->sms()->send(
+            new \Vonage\SMS\Message\SMS('221'.$numero, "test msg", $message)
+        );
+        
+        $message = $response->current();
+        
+        if ($message->getStatus() == 0) {
+            echo "The message was sent successfully\n";
+        } else {
+            echo "The message failed with status: " . $message->getStatus() . "\n";
+        }
 
             
             // return response()->json([
@@ -41,9 +45,7 @@ class MessagerieServicesController extends Controller
 
             // dd('SMS Sent Successfully.');
               
-        } catch (Exception $e) {
-            dd("Error: ". $e->getMessage());
-        }
+
     }
     
 }
