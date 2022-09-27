@@ -59,6 +59,7 @@ Route::get('commandes/{id}', [CommandeController::class, 'show'])->name('show.ap
 Route::delete('commandes/{id}', [CommandeController::class, 'destroy'])->name('destroy.api');
 
 Route::put('commandes/{id}', [CommandeController::class, 'update'])->name('update.api');
+Route::put('commandes/{id}/{lid}', [CommandeController::class, 'update'])->name('update.api');
 
 Route::post('messaging', [MessagerieServicesController::class, 'messaging'])->name('messaging.api');
 
